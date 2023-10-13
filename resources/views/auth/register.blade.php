@@ -1,11 +1,10 @@
 @extends('layout.nonauthapp')
 @section('content')
 <div class="card col-md-6 offset-md-3">
-    
     <form method="POST" action="{{route('register')}}">
-    @csrf
+        @csrf
         <div class="card-header">
-           
+
             <a href="/login" class="btn btn-primary float-end">Login</a>
             <h3>Login</h3>
         </div>
@@ -26,7 +25,7 @@
             <div class="mb-3 row">
                 <label for="email" class="col-sm-4 col-form-label">Email</label>
                 <div class="col-sm-8">
-                    <input type="email" class="form-control" id="email" name="email"  value="{{old('email')}}">
+                    <input type="email" class="form-control" id="email" name="email" value="{{old('email')}}">
                     <span class="text-danger">@error('email'){{$message}}@enderror</span>
                 </div>
             </div>
@@ -41,6 +40,29 @@
                 <label for="confirm_password" class="col-sm-4 col-form-label">Confirm Password</label>
                 <div class="col-sm-8">
                     <input type="text" name="confirm_password" id="confirm_password" class="form-control">
+                    <span class="text-danger">@error('confirm_password'){{$message}} @enderror</span>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="gender" class="col-sm-4 col-form-label">Gender</label>
+                <div class="col-sm-8">
+                    <input type="radio" name="gender" id="gender_m" value="M">
+                    <label for="gender" class="col-sm-2 col-form-label">Male</label>
+
+                    <input type="radio" name="gender" id="gender_f" value="F">
+                    <label for="gender" class="col-sm-2 col-form-label">Fimale</label>
+
+                    <span class="text-danger">@error('gender'){{$message}} @enderror</span>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="role" class="col-sm-4 col-form-label">Confirm Password</label>
+                <div class="col-sm-8">
+                    <select name="role" id="role" class="form-control">
+                        @foreach ($roles as $optionkey => $optionvalue)
+                            <option value="{{ $optionkey }}">{{$optionvalue}}</opttion>
+                        @endforeach
+                    </select>
                     <span class="text-danger">@error('confirm_password'){{$message}} @enderror</span>
                 </div>
             </div>

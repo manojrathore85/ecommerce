@@ -20,22 +20,26 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/login',[AuthController::class, 'loginview'])->name('loginview');
-Route::post('/login',[AuthController::class, 'login'])->name('login');
-Route::get('/register',[AuthController::class, 'registerview'])->name('registerview');
+Route::get('/login', [AuthController::class, 'loginview'])->name('loginview');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/register', [AuthController::class, 'registerview'])->name('registerview');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::get('/piramid', [AuthController::class, 'piramid']);
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function (){
+    Route::get('/dashboard', function () {
         return view('dashboard');
     });
-    Route::get('/profile', function (){
-        return view ('auth.profile'); 
+    Route::get('/profile', function () {
+        return view('auth.profile');
     });
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/users', [UserController::class, 'index']);
+
+    Route::get('/user', [UserController::class, 'manage']);
+    Route::post('/user', [UserController::class, 'store']);
+    Route::get('/user/{id}', [UserController::class, 'manage']);
+    Route::post('/user/{id}', [UserController::class, 'store']);
+    Route::post('/user/delete/', [UserController::class, 'delete']);
     Route::get('/getusers', [UserController::class, 'getusers']);
 });
-
-

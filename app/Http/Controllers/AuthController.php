@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     public function registerview(){
-        return view('auth.register');
+        $roles = ['1' =>'admin', '2' => 'manager', '3' => 'user'];
+        return view('auth.register', compact('roles'));
     }
     public function register(register $request){
         $validated = $request->validated();
@@ -20,12 +21,16 @@ class AuthController extends Controller
             User::create([
                 'name' => $validated['name'],
                 'email' => $validated['email'],
+                'gender' => $validated['gender'],
+                'role' => $validated['role'],
                 'password' => Hash::make($validated['password']),
             ]);
-            return back()->with('success', 'Your email has been register with us');
+            return $this->responceReturn($request,'success', 'Your email has been register with us',false, 200);
+           // return back()->with('success', 'Your email has been register with us');
         }
         catch (\Exception $e){
-            return back()->with('fail', "getting error in registeration".$e->getMessage());            
+           return $this->responceReturn($request,'fail', 'getting error in registeration'.$e->getMessage(),[['getting'.$e->getMessage()]],500 );
+            //return back()->with('fail', "getting error in registeration".$e->getMessage());            
         }        
     }
     public function loginview(){    
@@ -86,5 +91,20 @@ class AuthController extends Controller
             $max = $max-1;
             echo "<br>";
         } 
+    }
+    public function responceReturn(Request $request,$status, $message, $errors,$statuscode){
+        if ($request->is('api/*')) {
+            return response()->json([
+                'status' => $status,
+                'errors' => $errors,
+                'message' => $message,
+         ], $statuscode);
+        } else {
+              return back()->with($status, $message);
+        }
+    }
+    public function verificationResend(){
+        $user = User::find(1);
+        $user->sendEmailVerificationNotification();
     }
 }
