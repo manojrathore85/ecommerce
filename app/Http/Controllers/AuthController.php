@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserEmailverified;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\register;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Verified;
 
 class AuthController extends Controller
 {
@@ -103,8 +105,37 @@ class AuthController extends Controller
               return back()->with($status, $message);
         }
     }
-    public function verificationResend(){
-        $user = User::find(1);
+    public function verificationResend($id){
+        $user = User::find($id);
         $user->sendEmailVerificationNotification();
+        return redirect()->route('verification.notice')->with('status', 'A verification link has been sent to your email address.');
+    }
+    public function verificationNotice(){
+        //it simply return a view to notified user that link has been sent to your email
+        return view('verification.notice');
+    }
+    public function verificationVerify(Request $request){
+        //check if user allreadyverified redirect to dashboard page
+        // if(!$request->user()){
+        //     return redirect()->intended('login');
+        // }
+        try {
+        
+            $user = User::findOrfail($request->id);
+       
+            if ($user->hasVerifiedEmail()) {
+                    return redirect()->intended('dashboard');
+            }
+            //get the user based on the link from the request and marked user as varified and its returning true raised and event that user has been varified 
+            if ($user->markEmailAsVerified()) {
+                event(new Verified($request->user()));
+                event(new UserEmailverified($user->to_array()));
+            }
+            return redirect()->intended('dashboard');
+        } catch (\Throwable $th) {
+            return redirect()->intended('verification.noticey')->with('fail', 'Requested user are not register with us'. $th);        //throw $th;
+        }
+
+
     }
 }

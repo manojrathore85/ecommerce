@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
+use Illuminate\Support\Facades\Log;
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -43,4 +43,30 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public static function boot(){
+        parent::boot();
+        /**
+         * creating event log
+         */
+        static::creating(function($user){
+            Log::info('creating even call'.$user );
+        });
+        /**
+         * created event log 
+         */
+        static::created(function ($user){
+            //crated event loging here 
+            $user->sendEmailVerificationNotification();
+            Log::info('Following user has been created'.$user);
+        });
+        static::updated(function($user){
+            //update event loging here
+            Log::info('Folloing user updated'.$user);
+        });
+        static::deleted(function($user){
+            //delete event loging here 
+            Log::info('Following user has been deted'.$user);
+        });
+
+    }
 }

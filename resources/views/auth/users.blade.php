@@ -162,7 +162,7 @@
             if (confirm('Are you sure to delete this record')) {
                 $.ajax({
                     method: 'POST',
-                    url: '/user/delete',
+                    url: '/user-delete',
                     headers: {
                         'X-CSRF-TOKEN': csrfToken,
                         'Accept': 'application/json',
@@ -172,6 +172,8 @@
                         'id': id
                     },
                     success: function(data) {
+                        console.log(data);
+
                         showToast('success', data.message);
                         userTable.ajax.reload();
 
