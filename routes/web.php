@@ -2,6 +2,7 @@
 
 use App\Events\UserEmailverified;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\UserController;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Routing\RouteGroup;
@@ -50,3 +51,4 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::post('/user-delete',[UserController::class, 'delete']);
     Route::get('/getusers', [UserController::class, 'getusers']);
 });
+Route::resource('group', GroupController::class);
