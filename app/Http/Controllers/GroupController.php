@@ -9,7 +9,7 @@ use DataTables;
 class GroupController extends Controller
 {
     
-    public   $nature = ['1'=>'Income', '2'=>'Expences', '3'=>'Assets', '4'=>'Liability'];
+    public   $nature = ['Income'=>'Income', 'Expences'=>'Expences', 'Assets'=>'Assets', 'Liability'=>'Liability'];
     
     /**
      * Display a listing of the resource.

@@ -5,19 +5,16 @@
 
     @csrf
     @component('components.modalbox')
-    @slot('modalid')
-    modaladd
-    @endslot
-    @slot('title')
-    Group Model
-    @endslot
+        @slot('modalid')
+            modaladd
+        @endslot
+        @slot('title')
+            Group Model
+        @endslot
+        @slot('buttons')
 
-    @slot('buttons')
-
-    @endslot
+        @endslot
     @endcomponent
-
-
     <div class="card">
         <div class="card-header">
             <button type="button" class="btn btn-primary float-end add-button">Add</button>

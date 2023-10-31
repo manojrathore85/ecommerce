@@ -29,17 +29,19 @@
             <H3>UserList</H3>
         </div>
         <div class="card-body">
-            <table id="users-table" class="table table-striped">
-                <thead>
-                    <th>Sn</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Email Verified At</th>
-                    <th>CreatedAt</th>
-                    <th>ModifiedAt</th>
-                    <th>Action2</th>
-                </thead>
-            </table>
+            <div class="table-responsive">
+                <table id="users-table" class="table table-striped table-responsive" >
+                    <thead>
+                        <th>Sn</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Email Verified At</th>
+                        <th>CreatedAt</th>
+                        <th>ModifiedAt</th>
+                        <th>Action2</th>
+                    </thead>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -85,9 +87,10 @@
 <script>
     var userTable; //delear out side the function to make it accessable on every here in the page.
     $(document).ready(function() {
-            userTable = $('#users-table').DataTable({
+        userTable = $('#users-table').DataTable({
             serverSide: true, // Enable server-side processing
             processing: true, // Show processing indicator
+            responsive: true,
             ajax: {
                 url: '/getusers', // Replace with the correct route to fetch data
                 type: 'GET',
@@ -98,7 +101,7 @@
                     "orderable": false, // Prevent sorting on this column
                     "searchable": false, // Hide the search bar for this column
                     "render": function(data, type, full, meta) {
-                        return meta.row + meta.settings._iDisplayStart + 1;//to crate a sn column 
+                        return meta.row + meta.settings._iDisplayStart + 1; //to crate a sn column 
                     }
                 },
                 {

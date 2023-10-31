@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\UserEmailverified;
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\UserController;
@@ -52,3 +53,4 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::get('/getusers', [UserController::class, 'getusers']);
 });
 Route::resource('group', GroupController::class);
+Route::resource('account', AccountController::class);
