@@ -22,7 +22,8 @@
                 <li><a class="dropdown-item" href="/users">Users</a></li>
                 <li><a class="dropdown-item" href="/group">Groups</a></li>
                 <li><a class="dropdown-item" href="/account">Account</a></li>
-               
+                <li><a class="dropdown-item" href="/flore">Flore</a></li>
+                         
                 <li>
                   <hr class="dropdown-divider">
                 </li>

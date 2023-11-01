@@ -4,7 +4,7 @@
     <label for="name" class="col-sm-4 col-form-label">{{$label}}</label>
     <div class="col-sm-8">
         <input type="{{$type}}" class="{{$class}}" id="{{$id}}" name="{{$name}}" value="{{$value}}">
-        <span class="text-danger">@error('$errorname'){{$errormessage}}@enderror</span>
+        <span class="text-danger">@error($errorname){{$message}}@enderror</span>
     </div>
 </div>
 

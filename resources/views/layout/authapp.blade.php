@@ -31,11 +31,19 @@
     @stack('style')
     <div class="warper">
         @include('layout.navbar')
-
+        <div class="container" style="display:flex; justify-content: center;">
+        @if (Session::has('success'))
+        <div class="alert alert-success" style="min-width: 300px; text-align:center;">{{Session::get('success')}}</div>
+        @endif
+        @if (Session::has('fail'))
+        <div class="alert alert-danger" style="min-width: 300px; text-align:center;">{{Session::get('fail')}}</div>
+        @endif
+        </div>
         @yield('content')
         @include('layout.footer')
     </div>
     @stack('scripts')
 </body>
+
 
 </html>
