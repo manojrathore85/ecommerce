@@ -115,27 +115,18 @@ class AuthController extends Controller
         return view('verification.notice');
     }
     public function verificationVerify(Request $request){
-        //check if user allreadyverified redirect to dashboard page
-        // if(!$request->user()){
-        //     return redirect()->intended('login');
-        // }
-        try {
-        
-            $user = User::findOrfail($request->id);
-       
+        try {        
+            $user = User::findOrfail($request->id);       
             if ($user->hasVerifiedEmail()) {
                     return redirect()->intended('dashboard');
-            }
+            }          
             //get the user based on the link from the request and marked user as varified and its returning true raised and event that user has been varified 
             if ($user->markEmailAsVerified()) {
-                event(new Verified($request->user()));
-                event(new UserEmailverified($user->to_array()));
+                event(new UserEmailverified($user));
             }
             return redirect()->intended('dashboard');
-        } catch (\Throwable $th) {
-            return redirect()->intended('verification.noticey')->with('fail', 'Requested user are not register with us'. $th);        //throw $th;
+        } catch (\Exception $e) {
+            return redirect()->intended('email/notice')->with('fail', 'Requested user are not register with us'. $e);        //throw $th;
         }
-
-
     }
 }

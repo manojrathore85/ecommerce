@@ -5,14 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Group extends Model
+class Voucher extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'name',
-        'parent_id',
-        'nature',
-        'order',
-    ];
+    protected $guarded =  ['id'];
 }

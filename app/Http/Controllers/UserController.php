@@ -62,6 +62,19 @@ class UserController extends Controller
             return $this->responceReturn($request, 'fail', 'Error:' . $e->getMessage(), [['Error:' . $e->getMessage()]], 500);
         }
     }
+    public function create10user(){
+        $users = User::factory()
+        ->count(10)
+        ->make()->each(function($u) {
+           // $u->assignRole(((object) $this->roles)->random());
+            $u->gender = 'M';
+            $u->role = 'user';
+            return $u->save();
+        });
+        if($users){
+            return redirect('/users')->with('success', '10 user Created Successfully');
+        }
+    }
     /**
      * function is use to return respnoce according the request if request from the from / web it return back url and 
      * if request from the ajax or api its returning the json responce

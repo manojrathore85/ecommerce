@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreign('group_id')->references('id')->on('groups');
             $table->string('phone')->nullable();
             $table->string('email')->nullable();          
+            $table->string('category',100)->nullable();          
             $table->integer('city_id')->nullable();
             $table->float('op_balance',8 ,2)->nullable();
             $table->integer('created_by'); 

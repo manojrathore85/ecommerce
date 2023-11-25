@@ -36,3 +36,15 @@ function showToast(title, message) {
     var bootstrapToast = new bootstrap.Toast(toast);
     bootstrapToast.show();
 }
+$(document).ready(function(){
+    $('.numericonly').each(function(){
+        if(!$.isNumeric( $(this).val()) || $(this).val() == " " ){
+            $(this).val(0);
+        }
+    });
+    $('.numericonly').change(function(){
+        if(!$.isNumeric( $(this).val()) || $(this).val() == " " ){
+            $(this).val(0);
+        }
+    });
+});

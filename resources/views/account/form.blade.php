@@ -11,6 +11,7 @@
     <x-input type="text" name="phone" id="phone" label="Phone" value="{{$account ? $account->phone : old('phone')}}" />
     <x-input type="email" name="email" id="email" label="email" value="{{$account ? $account->email : old('email')}}" />
     <x-select name="group_id" id="group_id" label="Group" :options="$groups" :selected=" $account ? $account->group_id : old('group_id') " />
+    <x-select name="category" id="category" label="Category" :options="$categories" :selected=" $account ? $account->category : old('category') " />
     <x-select name="city_id" id="city_id" label="City" :options="$cities" :selected=" $account ? $account->city_id : old('city_id') " />
 
     <button type="submit" id="submit" name="submit" class="btn btn-primary float-end">Save</button>

@@ -23,7 +23,8 @@
                 <li><a class="dropdown-item" href="/group">Groups</a></li>
                 <li><a class="dropdown-item" href="/account">Account</a></li>
                 <li><a class="dropdown-item" href="/flore">Flore</a></li>
-                         
+                <li><a class="dropdown-item" href="/flate">Flate</a></li>
+                <li><a class="dropdown-item" href="/voucher">Voucher</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>

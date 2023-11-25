@@ -25,7 +25,8 @@
 
     <div class="card">
         <div class="card-header">
-            <button type="button" class="btn btn-primary float-end add-button">Add</button>
+            <button type="button" class="btn btn-primary float-end add-button ">Add</button>
+            <a  href="/createdumyuser" class="btn btn-primary float-end me-2">Create10 Dumy User</a>
             <H3>UserList</H3>
         </div>
         <div class="card-body">

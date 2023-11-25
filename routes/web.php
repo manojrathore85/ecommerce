@@ -6,12 +6,15 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FloreController;
+use App\Http\Controllers\FlateController;
+use App\Http\Controllers\VoucherController;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Laravel\Ui\Presets\React;
 use App\Models\User;
+use App\Models\Voucher;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,7 +55,19 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::post('/user/{id}', [UserController::class, 'store']);
     Route::post('/user-delete',[UserController::class, 'delete']);
     Route::get('/getusers', [UserController::class, 'getusers']);
+    Route::get('/createdumyuser', [UserController::class, 'create10user']);
 });
 Route::resource('group', GroupController::class);
 Route::resource('account', AccountController::class);
 Route::resource('flore', FloreController::class);
+Route::resource('flate', FlateController::class);
+
+Route::get('flate/{id}/{copy}', [FlateController::class, 'edit']);
+//Voucher Route
+Route::controller(VoucherController::class)->group(function(){
+    Route::get('/voucher','index');
+    Route::post('/voucher1','store');
+    Route::get('/voucher/create','create');
+    Route::post('/voucher/delete/', 'destroy');
+    Route::get('/voucherdetail/{id}', 'voucherDetail');
+});

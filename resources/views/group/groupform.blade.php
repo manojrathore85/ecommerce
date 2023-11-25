@@ -9,8 +9,8 @@
     <x-select name="nature" id="nature" label="Group Nature" :options="$nature" :selected=" $group ? $group->nature : old('nature') " />
     <x-input type="text" name="order" id="order" label="Order No" value="{{ $group ? $group->order : old('order')}}" />
 
-    <button type="submit" id="submit" name="submit" class="btn btn-primary float-end">Save</button>
-    <button type="button" id="cancel" name="cancel" class="btn btn-secondy float-end" data-bs-dismiss="modal">Cancel</button>
+    <button type="submit" id="submit" name="submit" class="btn btn-primary m-2 float-end">Save</button>
+    <button type="button" id="cancel" name="cancel" class="btn btn-secondary m-2 float-end" data-bs-dismiss="modal">Cancel</button>
 </form>
 <script>
     // this function is js based ajax request no jquery is used

@@ -13,13 +13,13 @@ class input extends Component
     public $errorname;
     public $errormessage;
     public $value;
-    public $class;
+    //public $class;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($name, $id, $type, $label ='', $errorname= '', $errormessage= '', $value='', $class='form-control')
+    public function __construct($name, $id, $type, $label ='', $errorname= '', $errormessage= '', $value='')
     {
         $this->name = $name;
         $this->id = $id;
@@ -28,7 +28,7 @@ class input extends Component
         $this->errorname = $errorname;
         $this->errormessage = $errormessage;
         $this->value = $value;
-        $this->class = $class;
+        //$this->class = $class;
     }
 
     /**

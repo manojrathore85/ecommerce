@@ -19,7 +19,7 @@ class GroupController extends Controller
     public function index(Request $request)
     {   
         if($request->ajax()){
-            $data = group::query();
+            $data = Group::query();
             $dtbl =  DataTables::of($data)
                 ->make(true);
             return $dtbl;
@@ -36,7 +36,7 @@ class GroupController extends Controller
     public function create()
     {
         $group= false;
-        $groups = group::pluck('name','id');
+        $groups = Group::pluck('name','id');
         $nature = $this->nature;
         return view('group.groupform', compact('group','groups', 'nature'));
     }
@@ -57,7 +57,7 @@ class GroupController extends Controller
                 'nature'=>$validated['nature'],
                 'order'=>$validated['order'],
             ];
-            group::create($params);
+            Group::create($params);
             return response()->json([
                 'status' => 'success',
                 'error' => false,
@@ -92,8 +92,8 @@ class GroupController extends Controller
      */
     public function edit($id)
     {
-        $group = group::findOrfail($id);
-        $groups = group::pluck('name', 'id');
+        $group = Group::findOrfail($id);
+        $groups = Group::pluck('name', 'id');
         $nature = $this->nature;
         
         return view('group.groupform', compact('group','groups', 'nature'));
@@ -116,7 +116,7 @@ class GroupController extends Controller
                 'nature'=>$validated['nature'],
                 'order'=>$validated['order'],
             ];
-            $group = group::findOrfail($id);
+            $group = Group::findOrfail($id);
             $group->update($params);
             return response()->json([
                 'status'=> 'success',
@@ -142,7 +142,7 @@ class GroupController extends Controller
     public function destroy($id)
     {
        try {
-        $group = group::findOrfail($id);
+        $group = Group::findOrfail($id);
         $group->delete();
         return response()->json([
             'status' => 'success',

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RequestAccount;
-use App\Models\account;
+use App\Models\Account;
 use App\Models\City;
 use App\Models\group;
 use Illuminate\Http\Request;
@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\DB;
 
 class AccountController extends Controller
 {
+   public $categories = ['Maintenance'=>'Maintenance','Other'=>'Other',''=>'NA'];
+    
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +23,7 @@ class AccountController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){
-            $account = account::query()
+            $account = Account::query()
             ->select('accounts.*','groups.name as groupname', 'cities.name as cityname', 'groups.nature')
             ->join('groups', 'accounts.group_id', '=', 'groups.id')
             ->leftjoin('cities', 'accounts.city_id', '=', 'cities.id')
@@ -41,9 +43,10 @@ class AccountController extends Controller
     public function create()
     {
         $account = false;
-        $groups = group::pluck('name','id');
+        $groups = Group::pluck('name','id');
         $cities = City::pluck('name','id');
-        return view ('account.form', compact('account','groups','cities'));
+        $categories = $this->categories;
+        return view ('account.form', compact('account','groups','cities','categories'));
     }
 
     /**
@@ -58,7 +61,7 @@ class AccountController extends Controller
         $params = $request->except(['_token']);
         $params['created_by'] =  Auth::id();
         try {
-            account::create($params);
+            Account::create($params);
             return response()->json([
                 'status'=> 'success',
                 'error' => false,
@@ -92,10 +95,11 @@ class AccountController extends Controller
      */
     public function edit($id)
     {
-        $account = account::findOrfail($id);
-        $groups = group::pluck('name', 'id');
+        $account = Account::findOrfail($id);
+        $groups = Group::pluck('name', 'id');
         $cities = City::pluck('name', 'id');
-        return view('account.form',compact('account','groups', 'cities'));
+        $categories = $this->categories;
+        return view('account.form',compact('account','groups', 'cities','categories'));
     }
 
     /**
@@ -110,7 +114,7 @@ class AccountController extends Controller
         $validated = $request->validated();
         try {
             $params = $request->except('_token');
-            $account = account::findOrfail($id);
+            $account = Account::findOrfail($id);
             $account->update($params);
             return response()->json([
                 'status' => 'success',
@@ -135,7 +139,7 @@ class AccountController extends Controller
     public function destroy($id)
     {
         try {
-            $account = account::findOrfail($id);
+            $account = Account::findOrfail($id);
             $account->delete();
             return response()->json([
                 'status' => 'success',

@@ -10,8 +10,8 @@
         <x-input type="text" name="no_of_flate" id="no_of_flate" label="No Of Flate" value="{{$flore ? $flore->no_of_flate : old('no_of_flate')}}" errorname="no_of_flate" />
         <x-select name="ground_or_top" id="ground_or_top" label="Ground or Top" :options="$options" :selected=" $flore ? $flore->ground_or_top : old('ground_or_top') " errorname="ground_or_top" />
 
-        <button type="submit" id="submit" name="submit" class="btn btn-primary float-end">Save</button>
-        <a href="/flore" id="cancel" class="btn btn-secondy float-end" data-bs-dismiss="modal">Cancel</a>
+        <button type="submit" id="submit" name="submit" class="btn btn-primary m-2 float-end">Save</button>
+        <a href="/flore" id="cancel" class="btn btn-secondary m-2 float-end" data-bs-dismiss="modal">Cancel</a>
     </form>
     <table class="table table-striped">
         <thead>

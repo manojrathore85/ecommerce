@@ -13,15 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('flate', function (Blueprint $table) {
+        Schema::create('flates', function (Blueprint $table) {
             $table->id();
             $table->integer('flate_no');
             $table->unsignedBigInteger('flore_id');
             $table->foreign('flore_id')->references('id')->on('flores');
             $table->string('owner_name', 100);
-            $table->integer('maintenance_area');
-            $table->integer('corpate_area');
-            $table->integer('builtup_area');
+            $table->float('maintenance_area',8, 2)->nullable();
+            $table->float('maintenance_rate',8, 2)->nullable();
+            $table->float('maintenance_amount',8, 2)->nullable();
+            $table->float('superbuiltup_area',8, 2)->nullable();
+            $table->float('builtup_area',8, 2)->nullable();
             $table->string('status');
             $table->timestamps();
         });
@@ -34,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('flate');
+        Schema::dropIfExists('flates');
     }
 };

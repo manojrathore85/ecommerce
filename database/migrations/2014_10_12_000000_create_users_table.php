@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Database\DBAL\TimestampType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -22,6 +23,7 @@ return new class extends Migration
             $table->string('gender');
             $table->string('role');
             $table->rememberToken();
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }

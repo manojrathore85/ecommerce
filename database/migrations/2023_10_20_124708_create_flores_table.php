@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('flores', function (Blueprint $table) {
             $table->id();
             $table->string('flore_no');
-            $table->integer('flore_area');
-            $table->integer('no_of_flate');
-            $table->string('grount_or_top', );
+            $table->integer('flore_area')->nullable();
+            $table->integer('no_of_flate')->nullable();
+            $table->string('grount_or_top', )->nullable();
             $table->timestamps();
         });
     }
