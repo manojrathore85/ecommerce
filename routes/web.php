@@ -7,6 +7,7 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FloreController;
 use App\Http\Controllers\FlateController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\VoucherController;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Routing\RouteGroup;
@@ -15,6 +16,7 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Laravel\Ui\Presets\React;
 use App\Models\User;
 use App\Models\Voucher;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +70,22 @@ Route::controller(VoucherController::class)->group(function(){
     Route::get('/voucher','index');
     Route::post('/voucher1','store');
     Route::get('/voucher/create','create');
+    Route::get('/voucher/{id}/edit','edit');
     Route::post('/voucher/delete/', 'destroy');
     Route::get('/voucherdetail/{id}', 'voucherDetail');
+});
+Route::controller(ReportController::class)->group(function (){
+    Route::get('report/journal', 'journal');
+    Route::get('report/flate-ledger', 'flateLedgerView');
+    Route::get('report/account-ledger', 'accountLedgerView');
+    Route::post('report/flate-ledger', 'flateLedger');
+    Route::post('report/account-ledger', 'accountLedger');
+});
+
+//to user artisan commands
+Route::get('/phpartisan-migrate', function () {
+    $exitCode = Artisan::call('migrate:refresh', [
+        '--force' => true,
+    ]);
+    //
 });
