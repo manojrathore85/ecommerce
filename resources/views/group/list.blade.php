@@ -81,7 +81,7 @@
             serverSide: true, // Enable server-side processing
             processing: true, // Show processing indicator
             ajax: {
-                url: '/group', // Replace with the correct route to fetch data
+                url: '{{url("/group")}}', // Replace with the correct route to fetch data
                 type: 'GET',
             },
             columns: [{
@@ -140,11 +140,11 @@
         $('#groups-table').on('click', '.edit-button', function() {
             console.log(this);
             var id = $(this).data('id');
-            $('#modaladd .modal-body').load("/group/" + id + "/edit");
+            $('#modaladd .modal-body').load('{{url("/group/")}}/'+ id + '/edit');
             $('#modaladd').modal('show');
         });
         $('.add-button').click(function() {
-            $('#modaladd .modal-body').load("/group/create");
+            $('#modaladd .modal-body').load('{{url("/group/create")}}');
             $('#modaladd').modal('show');
         });
         $('#groups-table').on('click', '.delete-button', function() {

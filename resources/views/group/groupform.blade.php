@@ -1,4 +1,4 @@
-<form method="{{$group ? 'PUT' : 'POST' }}" action="{{$group ? '/group/'.$group->id : '/group'}}" id="formGroup" name="formGroup">
+<form method="{{$group ? 'PUT' : 'POST' }}" action="{{url($group ? '/group/'.$group->id : '/group')}}" id="formGroup" name="formGroup">
 
     @csrf
     <x-input type="text" name="name" id="name" label="Name" value="{{ $group ? $group->name : old('name')}}" />

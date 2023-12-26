@@ -93,7 +93,7 @@
             processing: true, // Show processing indicator
             responsive: true,
             ajax: {
-                url: '/getusers', // Replace with the correct route to fetch data
+                url: '{{ url('/getusers') }}', // Replace with the correct route to fetch data
                 type: 'GET',
             },
             columns: [{

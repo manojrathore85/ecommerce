@@ -99,8 +99,8 @@
                     searchable: false,
                     render: function(data, type, row) {
 
-                        let btns = '<button class="btn btn-primary edit-button" data-id="' + row.id + '">Edit</button>';
-                        return btns += '<button class="btn btn-danger delete-button" data-id="' + row.id + '">Delete</button>';
+                        // Now this featue not implemented let btns = '<button class="btn btn-primary edit-button" data-id="' + row.id + '">Edit</button>';
+                        return btns = '<button class="btn btn-danger delete-button" data-id="' + row.id + '">Delete</button>';
                     }
                 },
                 // Add more columns as needed

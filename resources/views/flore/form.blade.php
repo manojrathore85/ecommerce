@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
     <?php $options = ['NA'=>'NA','Ground' => 'Ground', 'Top' => 'Top']; ?>
-    <form method="POST" action="{{$flore ? '/flore/'.$flore->id : '/flore' }}" id="formflore" name="formflore">
+    <form method="POST" action="{{url($flore ? '/flore/'.$flore->id : '/flore') }}" id="formflore" name="formflore">
         @csrf
        @if($flore) @method('PUT') @endif
         <x-input type="text" name="flore_no" id="flore_no" label="Flore No." value="{{$flore ? $flore->flore_no : old('flore_no')}}" errorname="flore_no" />

@@ -24,7 +24,7 @@
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ asset('js/comman.js') }}"></script>
+    {{-- <script src="{{ asset('js/comman.js') }}"></script> --}}
     <title>Document</title>
 </head>
 

@@ -25,7 +25,7 @@ class VoucherController extends Controller
         return view('voucher.list');
     }
     public function create(){
-
+        $voucher= false;
         $accounts = Account::query()
             ->select('accounts.*', 'groups.name as groupname', 'cities.name as cityname', 'groups.nature')
             ->join('groups', 'accounts.group_id', '=', 'groups.id')
@@ -35,26 +35,11 @@ class VoucherController extends Controller
         $flates = Flate::all();
         //->put('','Please Select');
         //dd($incomeheads);
-        return view('voucher.form', compact('flates', 'accounts'));
+        return view('voucher.form', compact('voucher','flates', 'accounts'));
     }
     public function store(RequestVoucher $request)
     {
-        //print_r($request->post());
-        // $maxno = Voucher::max('no')+1;
-   
-       
-        // echo $flates = $flates->where('id',3)->first();
-        // echo "<pre>";
-        // print_r($flates->owner_name);
-        // echo "</pre>";
-        // exit;
 
-        // $incomeAccount->is_maintenance= true;
-        // if($incomeAccount->is_maintenance= true){
-        //     echo "asdf";
-        // }
-        //print_r($request->post());
-        // exit;
         $validated = $request->validated();
         $flates = Flate::all();
         $incomeAccount = Account::findOrfail($request->input('cr_account_id'));
@@ -76,7 +61,7 @@ class VoucherController extends Controller
                     'voucher_id' => $insertedVoucher->id,
                     'account_id' => $request->post('dr_account_id'),
                     'flate_id' => $flateid,
-                    'amount' => $itemAmount = ($incomeAccount->category == 'Maintenance' ? $this->getMaintenanceAmount($flateid, $flates): intval($request->post('amount'))),
+                    'amount' => $itemAmount = ($incomeAccount->category == 'Maintenance' ? $this->getMaintenanceAmount($flateid, $flates): $request->post('amount')),
                     'naration' => $request->post('naration'),
                     'drcr' => 'DR',
                 ];
@@ -147,6 +132,35 @@ class VoucherController extends Controller
            // return back()->with('fail','Getting Error:'.$e);
         }
 
+    }
+    public function edit($id){
+        try {
+            $accounts = Account::query()
+            ->select('accounts.*', 'groups.name as groupname', 'cities.name as cityname', 'groups.nature')
+            ->join('groups', 'accounts.group_id', '=', 'groups.id')
+            ->leftjoin('cities', 'accounts.city_id', '=', 'cities.id')
+            ->get();
+            $accounts = $accounts->pluck('name', 'id');
+            $flates = Flate::all();
+            $voucher = DB::table('vouchers as v')
+                        ->select('v.*','v.id as v_id','v.account_id as cr_account_id', 'vd.account_id as dr_account_id','vd.*', 'vd.id as vd_id' )
+                        ->join('voucher_details as vd' ,'v.id', '=','vd.voucher_id') 
+                        ->where('v.id','=', $id)
+                        ->get();
+            //dd($voucher[0]->flate_id);          
+            return view('voucher.edit', compact('voucher','flates', 'accounts'));
+           
+
+        } catch (\Throwable $th) {
+            return back()->with('fail', 'Getting Error'.$th);
+        }
+    }
+    public function update(RequestVoucher $request){        
+        try {
+            //code...
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
     
 }

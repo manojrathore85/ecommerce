@@ -1,4 +1,4 @@
-<form method="POST" action="{{$user ? '/user/'.$user->id : '/user'}}" id="formUser" name="formUser">
+<form method="POST" action="{{url($user ? '/user/'.$user->id : '/user')}}" id="formUser" name="formUser">
     <?php 
     $options = ['1' => 'admin', '2' => 'manager', '3' => 'user']; ?>
     @csrf

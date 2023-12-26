@@ -5,7 +5,7 @@
 // echo "</pre>";
 
 ?>
-<form method="{{$account ? 'PUT' : 'POST' }}" action="{{$account ? '/account/'.$account->id : '/account' }}" id="formAccount" name="formAccount">
+<form method="{{$account ? 'PUT' : 'POST' }}" action="{{ url($account ? '/account/'.$account->id : '/account') }}" id="formAccount" name="formAccount">
     @csrf
     <x-input type="text" name="name" id="name" label="Name" value="{{$account ? $account->name : old('name')}}" />
     <x-input type="text" name="phone" id="phone" label="Phone" value="{{$account ? $account->phone : old('phone')}}" />

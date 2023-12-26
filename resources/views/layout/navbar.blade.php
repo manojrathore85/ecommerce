@@ -19,12 +19,17 @@
                 Admin
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="/users">Users</a></li>
-                <li><a class="dropdown-item" href="/group">Groups</a></li>
-                <li><a class="dropdown-item" href="/account">Account</a></li>
-                <li><a class="dropdown-item" href="/flore">Flore</a></li>
-                <li><a class="dropdown-item" href="/flate">Flate</a></li>
-                <li><a class="dropdown-item" href="/voucher">Voucher</a></li>
+                <li><a class="dropdown-item" href="{{ url('/users') }}">Users</a></li>
+                <li><a class="dropdown-item" href="{{ url('/group') }}">Groups</a></li>
+                <li><a class="dropdown-item" href="{{ url('/account') }}">Account</a></li>
+                <li><a class="dropdown-item" href="{{ url('/flore') }}">Flore</a></li>
+                <li><a class="dropdown-item" href="{{ url('/flate') }}">Flate</a></li>
+                <li><a class="dropdown-item" href="{{ url('/voucher') }}">Voucher</a></li>
+                <li><a class="dropdown-item" href="{{ url('/report/journal') }}">Journal</a></li>
+                <ul>
+                  <li><a class="dropdown-item" href="{{ url('/report/flate-ledger') }}">FlateLedger</a></li>
+                  <li><a class="dropdown-item" href="{{ url('/report/account-ledger') }}">AccountLedger</a></li>
+                </ul>
                 <li>
                   <hr class="dropdown-divider">
                 </li>

@@ -47,7 +47,7 @@
             processing: true,
             responsive: true,
             ajax: {
-                url: '/account',
+                url: '{{url("/account")}}',
                 type: 'GET',
             },
             columns: [{
@@ -113,14 +113,14 @@
             ],
         });
         $('.add-button').click(function(){
-            $('#modaladd .modal-body').load('/account/create');
+            $('#modaladd .modal-body').load('{{url("/account/create")}}');
             $('#modaladd').modal('show');
         });
         $('#account-table').on('click', '.edit-button', function(){
             let id = $(this).data('id');
             console.log(id);
             $('#modaladd').modal('show');
-            $('#modaladd .modal-body').load('/account/'+id+'/edit');
+            $('#modaladd .modal-body').load('{{url("/account/")}}/'+id+'/edit');
         });
     });
 </script>

@@ -26,6 +26,7 @@ class RequestFlate extends FormRequest
         return [
             'flate_no' => 'required|numeric|min:1|max:1000',
             'owner_name' => 'required|min:3|max:100',
+            'op_balance' => 'nullable|numeric',
             'maintenance_area' => 'required|numeric|min:1|max:10000',
             'builtup_area' => 'nullable|numeric|max:10000',
             'superbuiltup_area' => 'nullable|numeric|max:10000',
