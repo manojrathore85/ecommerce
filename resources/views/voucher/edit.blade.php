@@ -4,23 +4,23 @@
     <div class="card">
     <form method="POST" name="formVoucher" id="formVoucher"
         @if($voucher)
-        action="{{ url("voucher1/{$voucher[0]->vid}/update") }}"> 
+        action="{{ url("voucher/{$voucher[0]->v_id}/update") }}"> 
         
         @else
-        action="{{ url('voucher1') }}" >
+        action="{{ url('voucher') }}" >
         @endif
         <div class="card-header">          
-            <a href="/voucher" class="btn btn-primary float-end" >List</a>
-            <H1>Voucher</H1>
+            <a href="{{url('/voucher')}}" class="btn btn-primary float-end" >List</a>
+            <H4>Voucher</H4>
         </div>
         <div class="card-body">
-                <?php //echo "<pre>"; print_r($voucher); echo "</pre>";  ?>     
+                <?php //echo "<pre>"; print_r($voucher); echo "</pre>"; ?>     
                 @csrf
                 <div>
                     <x-input type='date' name="date" id="date" class="form-control" label="Date" value="{{$voucher ? $voucher[0]->date : old('date')}}" errorname="date" />
                     <x-input type='text' name="type" id="type" class="form-control" label="Type" value="{{$voucher ? $voucher[0]->type : old('type')}}" errorname="type" readonly />
                     <x-select name="cr_account_id" id="cr_account_id" label="Cr Account Head" :options="$accounts" :selected=" $voucher ? $voucher[0]->cr_account_id : 0 " errorname="cr_account_id" />
-                    <x-select name="dr_account_id" id="dr_account_id" label="Dr Account Head" :options="$accounts" selected=" $voucher ? $voucher[0]->dr_account_id : 0 " errorname="dr_account_id" />
+                    <x-select name="dr_account_id" id="dr_account_id" label="Dr Account Head" :options="$accounts" :selected="$voucher ? $voucher[0]->dr_account_id : 0 " errorname="dr_account_id" />
                     <x-input type='text' name="amount" id="amount" label="Amount" class="numericonly" value="old('account_id')" errorname="account_id" />
                     <x-input type='text' name="naration" id="naration" class="form-control" label="Naration" value="" errorname="naration" />
                 </div>
@@ -42,7 +42,7 @@
                             </tr>
                         </thead>
                         <tbody>                          
-                            @foreach($flates as $flate )                         
+                            @foreach($flates as $key => $flate )                         
                             <tr>
                                 <?php if(in_array($flate->id, array_column($voucher->toArray(),'flate_id'))){
                                         $checked = 'checked';
@@ -52,7 +52,8 @@
                                 ?>
                                 <td><input type="checkbox" name="flate_id[]" id="flate_id" value="{{$flate->id}}" {{$checked}}> </td>
                                 <td>{{$flate->flate_no}}
-                                    <input type="text" name="vd_id[]" value="{{$voucher->vd_id}}">
+                                  
+                                    <input type="hidden" name="vd_id[{{$flate->id}}]" value="{{$voucher->where('flate_id', $flate->id)->pluck('vd_id')->first();}}">
                                 </td>
                                 <td>{{$flate->owner_name}}</td>
                                 <td>{{$flate->maintenance_area}}</td>

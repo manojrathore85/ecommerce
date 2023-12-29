@@ -16,7 +16,7 @@
     <div class="card">
         <div class="card-header">
             <button type="button" class="btn btn-primary float-end add-button">Add</button>
-            <h1> Accounts</h1>
+            <h4> Accounts</h4>
         </div>
         <div class="card-body">
             <table id="account-table" class="table table-striped table-responsive">
@@ -95,7 +95,7 @@
                     searchable:false,
                     render:function(data,type,row){
                         let btns = '<button data-id="'+row.id+'" class="btn btn-primary btn-small edit-button" >Edit</button>';
-                        return btns += '<button data-id="'+row.id+'" class="btn btn-danger btn-small" >Delete</button>';  
+                        return btns += '<button data-id="'+row.id+'" class="btn btn-danger btn-small delete-button" >Delete</button>';  
                     }
 
 
@@ -121,6 +121,46 @@
             console.log(id);
             $('#modaladd').modal('show');
             $('#modaladd .modal-body').load('{{url("/account/")}}/'+id+'/edit');
+        });
+        $('#account-table').on('click', '.delete-button', function() {
+            console.log(this);
+            const csrfToken = $('meta[name="csrf-token"]').attr('content');
+            var id = $(this).data('id');
+            
+                Swal.fire({
+                    title: 'Are you sure to delete this record?',                   
+                    showCancelButton: true,
+                    confirmButtonText: 'Delete',                    
+                }).then((result) => {                    
+                    if (result.isConfirmed) {                       
+                        $.ajax({
+                            method: 'DELETE',
+                            url: '{{url("/account/")}}/'+id,
+                            headers: {
+                                'X-CSRF-TOKEN': csrfToken,
+                                'Accept': 'application/json',
+                                // You can add other headers as needed
+                            },
+                            data: {
+                                'id': id
+                            },
+                            success: function(data) {
+                                console.log(data);
+                                //showToast('success', data.message);
+                                accountTable.ajax.reload();
+                                Swal.fire(data.message, '', 'success')
+
+                            },
+                            error: function(data) {
+                                Swal.fire(data.message, '', 'success')
+                              //  showToast('success', data.message);
+                            },
+                        });
+                    } else if (result.isCancelled) {
+                        Swal.fire('Changes are not saved', '', 'info')
+                    }
+                }); 
+
         });
     });
 </script>

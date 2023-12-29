@@ -18,7 +18,7 @@
     <div class="card">
         <div class="card-header">
             <button type="button" class="btn btn-primary float-end add-button">Add</button>
-            <H3>Group List</H3>
+            <H4>Group List</H4>
         </div>
         <div class="card-body">
             <table id="groups-table" class="table table-striped">
@@ -160,7 +160,7 @@
                     if (result.isConfirmed) {                       
                         $.ajax({
                             method: 'DELETE',
-                            url: '/group/'+id,
+                            url: '{{url("/group/")}}/'+id,
                             headers: {
                                 'X-CSRF-TOKEN': csrfToken,
                                 'Accept': 'application/json',

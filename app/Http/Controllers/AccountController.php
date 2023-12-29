@@ -147,10 +147,11 @@ class AccountController extends Controller
                 'message' => 'Record deleted successfuly',
             ]);
         } catch (\Exception $e) {
+            //print_r($e->getMessage());
             return response()->json([
                 'status' => 'fail',
                 'error' => false,
-                'message' => 'GettingError'.$e,
+                'message' => 'GettingError'.$e->getMessage(),
             ]);
         }
     }

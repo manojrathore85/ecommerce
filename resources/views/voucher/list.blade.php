@@ -17,8 +17,8 @@
     @endcomponent
     <div class="card">
         <div class="card-header">
-            <a href="/voucher/create" type="button" class="btn btn-primary float-end add-button">Add</a>
-            <H3>Voucher List</H3>
+            <a href="{{url('/voucher/create')}}" type="button" class="btn btn-primary float-end add-button">Add</a>
+            <h4>Voucher List</h4>
         </div>
         <div class="card-body" style="overflow-x:auto;">
             <table id="voucher-table" class="table table-striped table-bordered">
@@ -47,7 +47,7 @@
             serverSide: true, // Enable server-side processing
             processing: true, // Show processing indicator
             ajax: {
-                url: '/voucher', // Replace with the correct route to fetch data
+                url: '{{url("/voucher")}}', // Replace with the correct route to fetch data
                 type: 'GET',
             },
             columns: [{
@@ -98,9 +98,9 @@
                     orderable: false,
                     searchable: false,
                     render: function(data, type, row) {
-
-                        // Now this featue not implemented let btns = '<button class="btn btn-primary edit-button" data-id="' + row.id + '">Edit</button>';
-                        return btns = '<button class="btn btn-danger delete-button" data-id="' + row.id + '">Delete</button>';
+                            url = "{{url('/voucher')}}/"+row.id+"/edit";
+                        let btns = '<a  href="'+url+'"  class="btn btn-primary edit-button" data-id="' + row.id + '">Edit</a>';
+                        return btns += '<button class="btn btn-danger delete-button" data-id="' + row.id + '">Delete</button>';
                     }
                 },
                 // Add more columns as needed
@@ -115,12 +115,12 @@
                 }
             ]
         });
-        $('#voucher-table').on('click', '.edit-button', function() {
-            console.log(this);
-            var id = $(this).data('id');
-            $('#modaladd .modal-body').load("/group/" + id + "/edit");
-            $('#modaladd').modal('show');
-        });
+        // $('#voucher-table').on('click', '.edit-button', function() {
+        //     console.log(this);
+        //     var id = $(this).data('id');
+        //     $('#modaladd .modal-body').load('{{url("/voucher/")}}/' + id + "/edit");
+        //     $('#modaladd').modal('show');
+        // });
         // Add event listener for opening and closing details
         $('#voucher-table tbody').on('click', 'td.dt-control', function() {
             console.log('asdfasdfasdfasdfasdf');
@@ -160,7 +160,7 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         method: 'POST',
-                        url: '/voucher/delete',
+                        url: '{{url("/voucher/delete")}}',
                         headers: {
                             'X-CSRF-TOKEN': csrfToken,
                             'Accept': 'application/json',
@@ -193,7 +193,7 @@
 
     function getData(d) {
         return $.ajax({
-            url: '/voucherdetail/' + d.id,
+            url: '{{url("/voucherdetail/")}}/' + d.id,
             type: 'GET',
         });
     };   

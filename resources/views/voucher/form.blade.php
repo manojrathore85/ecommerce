@@ -2,22 +2,22 @@
 @section('content')
 <div class="container">
     <div class="card">
-    <form method="POST" action="/voucher1" name="formVoucher" id="formVoucher">
+    <form method="POST" action="{{url('/voucher')}}" name="formVoucher" id="formVoucher">
         <div class="card-header">
           
-            <a href="/voucher" class="btn btn-primary float-end" >List</a>
-            <H1>Voucher</H1>
+            <a href="{{url('/voucher')}}" class="btn btn-primary float-end" >List</a>
+            <H4>Voucher</H4>
         </div>
         <div class="card-body">
      
                 @csrf
                 <div>
-                    <x-input type='date' name="date" id="date" class="form-control" label="Date" value="" errorname="date" />
+                    <x-input type='date' name="date" id="date" class="form-control" label="Date" value="{{old('date')}}" errorname="date" />
                     <x-input type='text' name="type" id="type" class="form-control" label="Type" value="JV" errorname="type" readonly />
 
                     <x-select name="cr_account_id" id="cr_account_id" label="Cr Account Head" :options="$accounts" :selected="old('cr_account_id') " errorname="cr_account_id" />
                     <x-select name="dr_account_id" id="dr_account_id" label="Dr Account Head" :options="$accounts" :selected="old('dr_account_id') " errorname="dr_account_id" />
-                    <x-input type='text' name="amount" id="amount" label="Amount" class="numericonly" value="old('account_id')" errorname="account_id" />
+                    <x-input type='text' name="amount" id="amount" label="Amount" class="numericonly" value="{{old('amount')}}" errorname="account_id" />
                     <x-input type='text' name="naration" id="naration" class="form-control" label="Naration" value="" errorname="naration" />
                 </div>
 
@@ -62,7 +62,7 @@
         </div>
         <div class="card-footer">
             <button class="btn btn-primary float-end m-2">Submit</button>
-            <a href="/voucher" class="btn btn-secondary float-end m-2">Cancel</a>
+            <a href="{{url('/voucher')}}" class="btn btn-secondary float-end m-2">Cancel</a>
         </div>
         </form>
     </div>

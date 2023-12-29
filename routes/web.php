@@ -68,9 +68,10 @@ Route::get('flate/{id}/{copy}', [FlateController::class, 'edit']);
 //Voucher Route
 Route::controller(VoucherController::class)->group(function(){
     Route::get('/voucher','index');
-    Route::post('/voucher1','store');
+    Route::post('/voucher','store');
     Route::get('/voucher/create','create');
     Route::get('/voucher/{id}/edit','edit');
+    Route::post('/voucher/{id}/update','update');
     Route::post('/voucher/delete/', 'destroy');
     Route::get('/voucherdetail/{id}', 'voucherDetail');
 });

@@ -113,8 +113,9 @@ class VoucherController extends Controller
         try {
             
             $voucher = Voucher::findOrfail($request->id);
-            $voucher->delete();
             VoucherDetail::where('voucher_id', '=', $voucher->id)->delete();
+            $voucher->delete();
+            
             DB::commit();
             return response()->json([
                 'status' => 'success',
@@ -155,12 +156,59 @@ class VoucherController extends Controller
             return back()->with('fail', 'Getting Error'.$th);
         }
     }
-    public function update(RequestVoucher $request){        
-        try {
-            //code...
-        } catch (\Throwable $th) {
-            //throw $th;
-        }
+    public function update($id, RequestVoucher $request){      
+       // try{
+            //dd($id);   
+            $validated = $request->validated();
+            $flates = Flate::all();
+            $incomeAccount = Account::findOrfail($request->input('cr_account_id'));
+            $existvdid = VoucherDetail::where('voucher_id',$id)->pluck('id')->toArray();
+            // print_r($existvdid);
+            // echo "<pre>"; print_r($request->input('flate_id')); echo "</pre>";
+            // echo "<pre>"; print_r($request->input('vd_id')); echo "</pre>";
+            $currentvdid = [];
+
+            //DB::beginTransaction();
+            //try {
+                $totalCr = 0;
+                foreach ($request->input('flate_id') as $key =>$flateid) {
+                    $currentvdid[] =  $request->input('vd_id')[$flateid];
+                    $newdata [] =  [
+                            'id' => $request->input('vd_id')[$flateid],
+                            'voucher_id' => $id,
+                            'account_id' => $request->input('dr_account_id'),
+                            'flate_id' => $flateid,
+                            'amount' => $itemAmount = ($incomeAccount->category == 'Maintenance' ? $this->getMaintenanceAmount($flateid, $flates): $request->input('amount')),
+                            'naration' => $request->input('naration'),
+                            'drcr' => 'DR',
+
+                    ];
+                    
+                    $totalCr = $totalCr + $itemAmount;
+                }
+                echo "<pre>"; print_r($newdata); echo "<pre>";
+                VoucherDetail::upsert($newdata, ['id']);
+
+                Voucher::findOrfail($id)->update([
+                    'date' => $request->input('date'),
+                    'account_id' => $request->input('cr_account_id'),
+                    'naration' => $request->input('naration'),
+                    'amount' => $totalCr,
+                    'drcr' => 'CR',
+                ]);
+                $delete_vd_id = array_diff($existvdid, $currentvdid);
+                VoucherDetail::destroy($delete_vd_id);
+                DB::commit();
+                //$emails= ['manojrathore85@gmail.com', 'manojrathore85rnd@gmail.com'];
+                //event(new VoucherCreated($emails));
+                return back()->with('success', 'Record save successfuly');
+
+
+
+
+        // }catch(\Exception $e){
+        //     echo "Gettign Error ".$e;
+        // }
     }
     
 }

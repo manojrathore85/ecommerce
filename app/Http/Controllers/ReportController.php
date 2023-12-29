@@ -18,7 +18,7 @@ class ReportController extends Controller
         $accounts->put(0, 'PleaseSelect');
         $flates= Flate::pluck('flate_no','id');
         $flates->put('All', 'All');
-        return view('reports.ledger', compact('data','accounts','flates'));     
+        return view('reports.flateledger', compact('data','accounts','flates'));     
     }
     public function accountLedgerView(){
         $data = false;
@@ -229,7 +229,26 @@ class ReportController extends Controller
         ->where('a.id','=',$request->input('account_id'));
 
         //get opeining balance from the voucher before the date transaction 
-        $opening = DB::table('voucher_details as vd')
+        $openingVoucher = DB::table('vouchers as v')
+        ->select(
+            DB::raw('0 as vid'),
+            DB::raw('0 as date'),
+            DB::raw('0 as voucher_id'),
+            DB::raw('0 as no'),
+            DB::raw('0 as type'),
+            DB::raw('0 as account_id'),
+            DB::raw('0 as name'),
+
+            DB::raw('SUM(CASE WHEN v.drcr = "DR" THEN v.amount ELSE 0 END) AS DR'),
+            DB::raw('SUM(CASE WHEN v.drcr = "CR" THEN v.amount ELSE 0 END) AS CR'),
+            DB::raw('0 as drcr')
+        )
+        //->join('flates as f','vd.flate_id', 'f.id')
+        //->join('vouchers as v','vd.voucher_id', 'v.id')     
+        ->where('v.account_id', '=', $request->input('account_id'))
+        ->where('v.date','<',$request->input('fromdate'));
+         //get opeining balance from the voucher detail before the date transaction     
+        $openingVoucherDetail = DB::table('voucher_details as vd')
         ->select(
             DB::raw('0 as vid'),
             DB::raw('0 as date'),
@@ -248,7 +267,10 @@ class ReportController extends Controller
         ->where('vd.account_id', '=', $request->input('account_id'))
         ->where('v.date','<',$request->input('fromdate'));
 
-        $opb = DB::table($masterOpening->union($opening))
+        $opb = DB::table(
+            $masterOpening->union($openingVoucher)
+            ->union($openingVoucherDetail)
+            )
         ->select(
             DB::raw('0 as vid'),
             DB::raw('0 as date'),
@@ -292,11 +314,9 @@ class ReportController extends Controller
         ->groupBy('v.no', 'vd.account_id', 'vd.drcr');
 
         //join the both table data together      
-         if($request->input('flate_id') == 'All'){
-            $data = $Voucher->union($voucherDetail);
-         }else{
-            $data = $opb->union($voucherDetail);           
-         }
+        $Voucher->union($voucherDetail);
+        $data = $opb->union($Voucher);           
+         
          $data = $data->orderBy('no')->get();
 
              // Paginate the results
