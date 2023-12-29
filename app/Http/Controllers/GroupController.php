@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RequestGroup;
-use App\Models\group;
+use App\Models\Group;
 use Illuminate\Http\Request;
 use DataTables;
 class GroupController extends Controller
