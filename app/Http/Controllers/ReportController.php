@@ -12,6 +12,16 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class ReportController extends Controller
 {
+    public function journalView(){
+        $journalData = false;
+        $accounts = Account::pluck('name','id');
+        $accounts->put('All','All');
+        $flates= Flate::pluck('flate_no','id');
+        $flates->put('All', 'All');
+        // echo "asdf";
+        // exit;
+        return view('reports.journal', compact('journalData','accounts', 'flates'));
+    }
     public function flateLedgerView(){
         $data= false;
         $accounts= Account::pluck('name','id');
@@ -26,7 +36,18 @@ class ReportController extends Controller
         $accounts->put(0,'PleaseSelect');
         return view('reports.accountLedger', compact('data','accounts'));
     }
+
     public function journal(Request $request){
+        $validated = $request->validate([
+            'fromdate' => 'required',
+            'todate' => 'required',
+           
+        ],[
+            'fromdate' => 'From date can not be empty',
+            'todate' => 'To date can not be empty',
+           
+        ]); 
+
         $accounts= Account::pluck('name','id');
         $accounts->put('All', 'All');
         $flates= Flate::pluck('flate_no','id');

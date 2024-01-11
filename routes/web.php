@@ -58,31 +58,32 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::post('/user-delete',[UserController::class, 'delete']);
     Route::get('/getusers', [UserController::class, 'getusers']);
     Route::get('/createdumyuser', [UserController::class, 'create10user']);
-});
-Route::resource('group', GroupController::class);
-Route::resource('account', AccountController::class);
-Route::resource('flore', FloreController::class);
-Route::resource('flate', FlateController::class);
 
-Route::get('flate/{id}/{copy}', [FlateController::class, 'edit']);
-//Voucher Route
-Route::controller(VoucherController::class)->group(function(){
-    Route::get('/voucher','index');
-    Route::post('/voucher','store');
-    Route::get('/voucher/create','create');
-    Route::get('/voucher/{id}/edit','edit');
-    Route::post('/voucher/{id}/update','update');
-    Route::post('/voucher/delete/', 'destroy');
-    Route::get('/voucherdetail/{id}', 'voucherDetail');
-});
-Route::controller(ReportController::class)->group(function (){
-    Route::get('report/journal', 'journal');
-    Route::get('report/flate-ledger', 'flateLedgerView');
-    Route::get('report/account-ledger', 'accountLedgerView');
-    Route::post('report/flate-ledger', 'flateLedger');
-    Route::post('report/account-ledger', 'accountLedger');
-});
+    Route::resource('group', GroupController::class);
+    Route::resource('account', AccountController::class);
+    Route::resource('flore', FloreController::class);
+    Route::resource('flate', FlateController::class);
 
+    Route::get('flate/{id}/{copy}', [FlateController::class, 'edit']);
+    //Voucher Route
+    Route::controller(VoucherController::class)->group(function(){
+        Route::get('/voucher','index');
+        Route::post('/voucher','store');
+        Route::get('/voucher/create','create');
+        Route::get('/voucher/{id}/edit','edit');
+        Route::post('/voucher/{id}/update','update');
+        Route::post('/voucher/delete/', 'destroy');
+        Route::get('/voucherdetail/{id}', 'voucherDetail');
+    });
+    Route::controller(ReportController::class)->group(function (){
+        Route::get('report/journal', 'journalView');
+        Route::post('report/journal', 'journal');
+        Route::get('report/flate-ledger', 'flateLedgerView');
+        Route::get('report/account-ledger', 'accountLedgerView');
+        Route::post('report/flate-ledger', 'flateLedger');
+        Route::post('report/account-ledger', 'accountLedger');
+    });
+});
 //to user artisan commands
 Route::get('/phpartisan-migrate', function () {
     $exitCode = Artisan::call('migrate:refresh', [

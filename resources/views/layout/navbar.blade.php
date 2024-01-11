@@ -9,10 +9,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/">Home</a>
+              <a class="nav-link active" aria-current="page" href="{{url('/')}}">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Dashboard</a>
+              <a class="nav-link" href="{{url('/dashboard')}}">Dashboard</a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -26,9 +26,10 @@
                 <li><a class="dropdown-item" href="{{ url('/flate') }}">Flate</a></li>
                 <li><a class="dropdown-item" href="{{ url('/voucher') }}">Voucher</a></li>
                 <li><a class="dropdown-item" href="{{ url('/report/journal') }}">Journal</a></li>
-                <ul>
-                  <li><a class="dropdown-item" href="{{ url('/report/flate-ledger') }}">FlateLedger</a></li>
-                  <li><a class="dropdown-item" href="{{ url('/report/account-ledger') }}">AccountLedger</a></li>
+                <li class="dropdown-item">Ledger</li>
+                <ul  aria-labelledby="navbarDropdown" >
+                  <li style="list-style: none"><a class="dropdown-item"  href="{{ url('/report/flate-ledger') }}">FlateLedger</a></li>
+                  <li style="list-style: none"><a class="dropdown-item" href="{{ url('/report/account-ledger') }}">AccountLedger</a></li>
                 </ul>
                 <li>
                   <hr class="dropdown-divider">
