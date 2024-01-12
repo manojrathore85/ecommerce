@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\FloreController;
 use App\Http\Controllers\FlateController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SalesController;
 use App\Http\Controllers\VoucherController;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Routing\RouteGroup;
@@ -84,6 +85,9 @@ Route::middleware(['auth','verified'])->group(function () {
         Route::post('report/account-ledger', 'accountLedger');
     });
 });
+
+Route::get('/sales',[SalesController::class, 'index']);
+Route::get('/saleslist',[SalesController::class, 'saleslist']);
 //to user artisan commands
 Route::get('/phpartisan-migrate', function () {
     $exitCode = Artisan::call('migrate:refresh', [

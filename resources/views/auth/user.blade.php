@@ -17,6 +17,7 @@
         <span class="text-danger">@error('$errorname'){{$errormessage}}@enderror</span>
     </div>
     <x-select name="role" id="role" label="User Role" :options="$options" :selected=" $user ? $user->role : old('role') " />
+    <input type="file" name="profile_img" id="profile_img">   
     <button type="submit" id="submit" name="submit" class="btn btn-primary m-2 float-end">Save</button>
     <button type="button" id="cancel" name="cancel" class="btn btn-secondary m-2 float-end" data-bs-dismiss="modal">Cancel</button>
 </form>
